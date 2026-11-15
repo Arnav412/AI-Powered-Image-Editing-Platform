@@ -1,0 +1,9 @@
+streamlit>=1.40
+pillow>=10.0
+python-dotenv>=1.0
+google-genai>=1.0
+openai>=1.50
+requests>=2.30
+numpy>=1.25
+faiss-cpu>=1.9
+pytest>=8.0

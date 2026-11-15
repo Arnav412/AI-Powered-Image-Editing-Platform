@@ -42,6 +42,42 @@ st.markdown(
         max-width: 1400px;
       }
 
+      /* Fix Streamlit markdown container paragraph clipping */
+      div[data-testid="stMarkdownContainer"] > p {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      /* Metric Cards (Stat Bar) - Fully Theme Adaptive & High Contrast */
+      .pc-stat-card {
+        background: var(--secondary-background-color, #1e293b);
+        border: 1px solid rgba(128, 128, 128, 0.28);
+        border-radius: 8px;
+        padding: 14px 16px;
+        margin-bottom: 0.75rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        box-sizing: border-box;
+      }
+      .pc-stat-label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--text-color, #ffffff);
+        opacity: 0.88;
+        line-height: 1.3;
+        margin: 0 0 6px 0;
+        padding: 0;
+      }
+      .pc-stat-val {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: var(--text-color, #ffffff);
+        line-height: 1.1;
+        margin: 0;
+        padding: 0;
+      }
+
       /* Card Grid & Image Container */
       .pc-card-caption {
         font-size: 0.825rem;
@@ -223,18 +259,42 @@ with st.sidebar:
 def render_library() -> None:
     records = store.list_images()
 
-    # Stat strip (Native Streamlit metrics for dark/light mode compatibility)
+    # Stat cards (High-contrast, unclipped, dark/light mode compatible)
     c_s1, c_s2, c_s3, c_s4 = st.columns(4)
     with c_s1:
-        st.metric("Total Assets", len(records))
+        st.markdown(
+            f"""<div class='pc-stat-card'>
+                <div class='pc-stat-label'>TOTAL ASSETS</div>
+                <div class='pc-stat-val'>{len(records)}</div>
+            </div>""",
+            unsafe_allow_html=True,
+        )
     with c_s2:
-        st.metric("Indexed Vectors", store.vector_store.count())
+        st.markdown(
+            f"""<div class='pc-stat-card'>
+                <div class='pc-stat-label'>INDEXED VECTORS</div>
+                <div class='pc-stat-val'>{store.vector_store.count()}</div>
+            </div>""",
+            unsafe_allow_html=True,
+        )
     with c_s3:
         all_tags = sorted({t for r in records for t in r.tags if t})
-        st.metric("Unique Tags", len(all_tags))
+        st.markdown(
+            f"""<div class='pc-stat-card'>
+                <div class='pc-stat-label'>UNIQUE TAGS</div>
+                <div class='pc-stat-val'>{len(all_tags)}</div>
+            </div>""",
+            unsafe_allow_html=True,
+        )
     with c_s4:
         total_versions = sum(r.version_count for r in records)
-        st.metric("Total Edits", total_versions - len(records))
+        st.markdown(
+            f"""<div class='pc-stat-card'>
+                <div class='pc-stat-label'>TOTAL EDITS</div>
+                <div class='pc-stat-val'>{total_versions - len(records)}</div>
+            </div>""",
+            unsafe_allow_html=True,
+        )
 
     st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
 

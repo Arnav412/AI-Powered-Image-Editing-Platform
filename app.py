@@ -36,84 +36,18 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-      /* Base & Typography */
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-      
-      html, body, [class*="css"] {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        color: #0f172a;
-      }
       .block-container {
         padding-top: 1.5rem;
         padding-bottom: 3rem;
         max-width: 1400px;
       }
 
-      /* Clean Navigation & Header */
-      .pc-topbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid #e2e8f0;
-        margin-bottom: 1.5rem;
-      }
-      .pc-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        letter-spacing: -0.025em;
-        color: #0f172a;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      .pc-subtitle {
-        font-size: 0.875rem;
-        color: #64748b;
-        margin-top: 2px;
-      }
-
-      /* Metric Cards (Stat Bar) */
-      .pc-stat-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 0.75rem 1rem;
-        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
-      }
-      .pc-stat-label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #64748b;
-      }
-      .pc-stat-val {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #0f172a;
-        margin-top: 2px;
-      }
-
       /* Card Grid & Image Container */
-      .pc-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 0.75rem;
-        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        margin-bottom: 1.25rem;
-      }
-      .pc-card:hover {
-        border-color: #cbd5e1;
-        box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
-      }
       .pc-card-caption {
-        font-size: 0.8125rem;
-        color: #334155;
+        font-size: 0.825rem;
+        color: var(--text-color, #334155);
         line-height: 1.4;
         font-weight: 500;
-        min-height: 2.8em;
         margin-top: 0.5rem;
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -121,38 +55,36 @@ st.markdown(
         overflow: hidden;
       }
 
-      /* Pills & Badges - Neutral Charcoal & Precision Slate (NO AI PURPLE) */
+      /* Pills & Badges - Theme Adaptive (Supports Light & Dark Mode) */
       .pc-pill {
         display: inline-flex;
         align-items: center;
-        padding: 2px 8px;
+        padding: 3px 8px;
         border-radius: 6px;
         font-size: 0.725rem;
         font-weight: 600;
         letter-spacing: 0.02em;
         margin-right: 4px;
         margin-top: 4px;
+        background: var(--secondary-background-color, rgba(128, 128, 128, 0.15));
+        color: var(--text-color, #334155);
+        border: 1px solid rgba(128, 128, 128, 0.25);
       }
       .pc-pill-score {
-        background: #ecfdf5;
-        color: #065f46;
-        border: 1px solid #a7f3d0;
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.35);
       }
       .pc-pill-version {
-        background: #f1f5f9;
-        color: #334155;
-        border: 1px solid #e2e8f0;
+        background: rgba(128, 128, 128, 0.15);
+        color: var(--text-color, #334155);
+        border: 1px solid rgba(128, 128, 128, 0.25);
       }
       .pc-pill-tag {
-        background: #f8fafc;
-        color: #475569;
-        border: 1px solid #e2e8f0;
+        background: rgba(128, 128, 128, 0.1);
+        color: var(--text-color, #475569);
+        border: 1px solid rgba(128, 128, 128, 0.2);
         font-weight: 500;
-      }
-      .pc-pill-active {
-        background: #0f172a;
-        color: #f8fafc;
-        border: 1px solid #0f172a;
       }
 
       /* Studio Inspector & Breadcrumb Strip */
@@ -161,66 +93,16 @@ st.markdown(
         align-items: center;
         gap: 0.5rem;
         font-size: 0.85rem;
-        color: #64748b;
+        color: var(--text-color, #64748b);
         margin-bottom: 1rem;
-        padding: 0.5rem 0.75rem;
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
+        padding: 0.6rem 0.85rem;
+        background: var(--secondary-background-color, rgba(128, 128, 128, 0.1));
+        border: 1px solid rgba(128, 128, 128, 0.2);
         border-radius: 6px;
       }
       .pc-crumb-current {
         font-weight: 600;
-        color: #0f172a;
-      }
-
-      /* Version Timeline Strip */
-      .pc-vnode {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 8px;
-        padding: 0.6rem;
-        margin-bottom: 0.5rem;
-      }
-      .pc-vnode-active {
-        border: 2px solid #0f172a;
-        box-shadow: 0 0 0 1px #0f172a;
-      }
-      .pc-vnode-meta {
-        font-size: 0.75rem;
-        color: #64748b;
-        margin-top: 2px;
-      }
-
-      /* Quick Modifiers / Suggestion Chips */
-      .pc-prompt-chip {
-        display: inline-block;
-        padding: 4px 10px;
-        margin: 2px 4px 6px 0;
-        border-radius: 16px;
-        background: #f1f5f9;
-        color: #1e293b;
-        font-size: 0.75rem;
-        font-weight: 500;
-        border: 1px solid #cbd5e1;
-        cursor: pointer;
-      }
-
-      /* Streamlit Element Overrides */
-      div.stButton > button[kind="primary"] {
-        background-color: #0f172a !important;
-        border-color: #0f172a !important;
-        color: #ffffff !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.01em !important;
-        border-radius: 6px !important;
-      }
-      div.stButton > button[kind="primary"]:hover {
-        background-color: #1e293b !important;
-        border-color: #1e293b !important;
-      }
-      div.stButton > button[kind="secondary"] {
-        border-radius: 6px !important;
-        font-weight: 500 !important;
+        color: var(--text-color, #0f172a);
       }
     </style>
     """,
@@ -341,30 +223,18 @@ with st.sidebar:
 def render_library() -> None:
     records = store.list_images()
 
-    # Stat strip
+    # Stat strip (Native Streamlit metrics for dark/light mode compatibility)
     c_s1, c_s2, c_s3, c_s4 = st.columns(4)
     with c_s1:
-        st.markdown(
-            f"<div class='pc-stat-card'><div class='pc-stat-label'>Total Assets</div><div class='pc-stat-val'>{len(records)}</div></div>",
-            unsafe_allow_html=True,
-        )
+        st.metric("Total Assets", len(records))
     with c_s2:
-        st.markdown(
-            f"<div class='pc-stat-card'><div class='pc-stat-label'>Indexed Vectors</div><div class='pc-stat-val'>{store.vector_store.count()}</div></div>",
-            unsafe_allow_html=True,
-        )
+        st.metric("Indexed Vectors", store.vector_store.count())
     with c_s3:
         all_tags = sorted({t for r in records for t in r.tags if t})
-        st.markdown(
-            f"<div class='pc-stat-card'><div class='pc-stat-label'>Unique Tags</div><div class='pc-stat-val'>{len(all_tags)}</div></div>",
-            unsafe_allow_html=True,
-        )
+        st.metric("Unique Tags", len(all_tags))
     with c_s4:
         total_versions = sum(r.version_count for r in records)
-        st.markdown(
-            f"<div class='pc-stat-card'><div class='pc-stat-label'>Total Edits</div><div class='pc-stat-val'>{total_versions - len(records)}</div></div>",
-            unsafe_allow_html=True,
-        )
+        st.metric("Total Edits", total_versions - len(records))
 
     st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
 

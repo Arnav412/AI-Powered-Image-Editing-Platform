@@ -37,45 +37,49 @@ st.markdown(
     """
     <style>
       .block-container {
-        padding-top: 1.5rem;
+        padding-top: 2.5rem;
         padding-bottom: 3rem;
         max-width: 1400px;
       }
 
       /* Fix Streamlit markdown container paragraph clipping */
+      div[data-testid="stMarkdownContainer"] {
+        overflow: visible !important;
+      }
       div[data-testid="stMarkdownContainer"] > p {
         margin: 0 !important;
         padding: 0 !important;
       }
 
-      /* Metric Cards (Stat Bar) - Fully Theme Adaptive & High Contrast */
+      /* Metric Cards (Stat Bar) - Fully Theme Adaptive, Well Padded & High Contrast */
       .pc-stat-card {
         background: var(--secondary-background-color, #1e293b);
         border: 1px solid rgba(128, 128, 128, 0.28);
-        border-radius: 8px;
-        padding: 14px 16px;
-        margin-bottom: 0.75rem;
+        border-radius: 10px;
+        padding: 26px 20px 20px 20px !important;
+        margin-top: 8px !important;
+        margin-bottom: 1rem !important;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         box-sizing: border-box;
       }
       .pc-stat-label {
-        font-size: 0.78rem;
+        font-size: 0.75rem;
         font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.08em;
         color: var(--text-color, #ffffff);
         opacity: 0.88;
-        line-height: 1.3;
-        margin: 0 0 6px 0;
-        padding: 0;
+        line-height: 1.4;
+        margin: 0 0 8px 0 !important;
+        padding-top: 4px !important;
       }
       .pc-stat-val {
-        font-size: 1.6rem;
+        font-size: 1.65rem;
         font-weight: 700;
         color: var(--text-color, #ffffff);
-        line-height: 1.1;
-        margin: 0;
-        padding: 0;
+        line-height: 1.2;
+        margin: 0 !important;
+        padding: 0 !important;
       }
 
       /* Card Grid & Image Container */
@@ -259,7 +263,11 @@ with st.sidebar:
 def render_library() -> None:
     records = store.list_images()
 
-    # Stat cards (High-contrast, unclipped, dark/light mode compatible)
+    st.markdown("## ☷ **Image Library**")
+    st.caption("Browse, search, and manage your AI-edited collection.")
+    st.markdown("<div style='height: 0.6rem;'></div>", unsafe_allow_html=True)
+
+    # Stat cards (High-contrast, generously padded, unclipped, positioned well below top)
     c_s1, c_s2, c_s3, c_s4 = st.columns(4)
     with c_s1:
         st.markdown(
